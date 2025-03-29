@@ -25,7 +25,7 @@ public abstract class BaseController<T,S extends BaseService<T>> {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<T> findById(@PathVariable("id") String id) {
+    public ResponseEntity<T> findById(@PathVariable("id") Long id) {
         try {
 
             return ResponseEntity.ok(service.findById(id));
@@ -41,13 +41,13 @@ public abstract class BaseController<T,S extends BaseService<T>> {
     }
 
     @PostMapping
-    public ResponseEntity<T> create(@RequestBody @Valid T entidade) {
+    public ResponseEntity<T> create(@RequestBody @Valid T entity) {
         try {
 
             return ResponseEntity
                     .status(HttpStatus.CREATED)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .body(service.create(entidade));
+                    .body(service.create(entity));
 
         }catch(Exception ex) {
             log.error(ex.getMessage());
@@ -56,11 +56,11 @@ public abstract class BaseController<T,S extends BaseService<T>> {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<T> edit(@PathVariable("id") String id,
-                                    @RequestBody @Valid T entidade) {
+    public ResponseEntity<T> edit(@PathVariable("id") Long id,
+                                    @RequestBody @Valid T entity) {
         try {
 
-            return ResponseEntity.ok(service.edit(id, entidade));
+            return ResponseEntity.ok(service.edit(id, entity));
 
         }catch(EntityNotFoundException ex) {
 
@@ -73,7 +73,7 @@ public abstract class BaseController<T,S extends BaseService<T>> {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable("id") String id) {
+    public ResponseEntity<Object> delete(@PathVariable("id") Long id) {
         try {
 
             service.delete(id);
